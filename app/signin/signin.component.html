@@ -1,0 +1,105 @@
+<h1> sign in using Template Driven form </h1>
+<div class="container">
+    <form   name="siginin"
+            #singinForms="ngForm" 
+            (ngSubmit)="singinForms.form.valid && loginUser(singinForms)"
+            novalidate 
+           [appMatchPassword]="['password','confrimPassword']">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Full Name </label>
+            <input type="text" 
+                    class="form-control" 
+                    id="fullname"  
+                    name="fullName" 
+                    [(ngModel)]="siginin.fullName"
+                    minlength="6"
+                    maxlength="20"
+                    #fullname="ngModel"
+                    required
+                    [ngStyle]="{'is-invalid':singinForms.submitted && fullname.errors}">
+            <div *ngIf="singinForms.submitted && fullname.errors" class="invalid-feedback">
+                <div *ngIf="fullname.errors['requard']"> fullname  is requard</div>
+                <div *ngIf="fullname.errors['minlength']"> fullname  must be at least 6 characters</div>
+                <div *ngIf="fullname.errors['maxlength']"> fullname  must be at most 20 characters</div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Username </label>
+            <input type="email" 
+                    class="form-control" 
+                    id="exampleInputEmail1" 
+                    name="username" 
+                    [(ngModel)]="siginin.userName"
+                    #username="ngModel"
+                    required
+                    [ngStyle]="{'is-invalid':singinForms.submitted && username.errors}">
+            <div *ngIf="singinForms.submitted && username.errors" class="invalid-feedback">
+                <div *ngIf="username.errors['required']">Username is required</div>
+                <div *ngIf="username.errors['username']"> Username is in Valid</div>
+            </div>
+        </div>
+          
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email </label>
+            <input  type="email" 
+                    class="form-control" 
+                    id="exampleInputEmail1" 
+                    name="email"
+                    [(ngModel)]="siginin.email"
+                    required
+                    #email="ngModel"
+                    [ngStyle]="{'is-invalid':singinForms.submitted && email.errors}">
+                    <div *ngIf="singinForms.submitted && email.errors"  class="invalid-feedback">
+                        <div *ngIf=" email.errors['required']"> email is required</div>
+                        <div *ngIf="email.errors['email']"> email is valid</div>
+                    </div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input  type="password" 
+                    class="form-control" 
+                    id="Password" 
+                    name="password" 
+                    [(ngModel)]="siginin.password"
+                    #password="ngModel"
+                    required
+                    maxlength="40"
+                    minlength="6"
+                    [ngStyle]="{'is-invalid':singinForms.submitted && password.errors}">
+                    <div *ngIf="singinForms.submitted && password.errors"  class="invalid-feedback">
+                        <div *ngIf="password.errors['required']"> password is required</div>
+                        <div *ngIf="password.errors['minlength']">Password must be at least 6 characters</div>
+                        <div *ngIf="password.errors['maxlength']">password must not exceed 40 characters</div>
+                    </div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">confrim Password </label>
+            <input  type="password" 
+                    class="form-control" 
+                    id="confrimPassword"
+                    name="confrimPassword"
+                    [(ngModel)]="siginin.confrimPassword"
+                    required
+                    #confrimpassword="ngModel" 
+                    [ngStyle]="{'is-invalid':singinForms.submitted && confrimpassword.errors}">
+                    <div *ngIf="singinForms.submitted && confrimpassword.errors"class="invalid-feedback">
+                        <div *ngIf="confrimpassword.errors['requard']"> Confirm Password is required</div>
+                        <div *ngIf="confrimpassword.errors['matching']"> Confirm Password does not match</div>
+                    </div>
+        </div>
+        <div class="mb-3 form-check">
+          <input 
+            type="checkbox" 
+            class="form-check-input" 
+            id="exampleCheck1"
+            name="terms"
+            [(ngModel)]="siginin.acceptTerms"
+            required 
+            #terms="ngModel">
+          <label class="form-check-label" for="exampleCheck1" name="terms" ngModel> I Agree To Terms</label>
+          <div *ngIf="singinForms.submitted && terms.errors"  class="invalid-feedback">Accept Terms is required</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="button" class="btn btn-warning float-right" (click)="onRest(singinForms)">Reset</button>
+      </form>
+</div>
